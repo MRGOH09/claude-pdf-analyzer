@@ -345,7 +345,155 @@ const ExpenseAnalyzer = () => {
             </div>
           </div>
         </div>
-        {/* 其余完整 UI 省略，和你最初的 return 保持一致 ... */}
+        {/* 主内容区 */}
+        {activeTab === 'basic' && (
+          <div className="bg-white rounded-lg shadow p-6">
+            <h2 className="text-xl font-semibold mb-6">基本财务信息</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">月薪 (RM)</label>
+                <input
+                  type="number"
+                  value={basicInfo.salary}
+                  onChange={e => setBasicInfo({...basicInfo, salary: e.target.value})}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                  placeholder="请输入每月薪水"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">分析月份</label>
+                <div className="relative calendar-container">
+                  <button
+                    onClick={() => setShowCalendar(!showCalendar)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-left flex items-center justify-between bg-white hover:bg-gray-50"
+                  >
+                    <span className="flex items-center">
+                      <Calendar className="h-5 w-5 text-gray-400 mr-2" />
+                      {(() => {
+                        const { year, month } = parseMonthValue(basicInfo.currentMonth);
+                        return `${year}年 ${months[month]}`;
+                      })()}
+                    </span>
+                    <ChevronRight className={`h-5 w-5 text-gray-400 transform transition-transform ${showCalendar ? 'rotate-90' : ''}`} />
+                  </button>
+                  {showCalendar && (
+                    <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10 p-4">
+                      <div className="flex items-center justify-between mb-4">
+                        <button onClick={() => {
+                          if (calendarMonth === 0) {
+                            setCalendarYear(calendarYear - 1);
+                            setCalendarMonth(11);
+                          } else {
+                            setCalendarMonth(calendarMonth - 1);
+                          }
+                        }} className="p-1 hover:bg-gray-100 rounded">
+                          <ChevronLeft className="h-5 w-5 text-gray-600" />
+                        </button>
+                        <div className="text-center">
+                          <div className="text-lg font-semibold text-gray-900">{calendarYear}年</div>
+                          <div className="text-sm text-gray-600">{months[calendarMonth]}</div>
+                        </div>
+                        <button onClick={() => {
+                          if (calendarMonth === 11) {
+                            setCalendarYear(calendarYear + 1);
+                            setCalendarMonth(0);
+                          } else {
+                            setCalendarMonth(calendarMonth + 1);
+                          }
+                        }} className="p-1 hover:bg-gray-100 rounded">
+                          <ChevronRight className="h-5 w-5 text-gray-600" />
+                        </button>
+                      </div>
+                      <div className="grid grid-cols-3 gap-2">
+                        {months.map((month, index) => {
+                          const isSelected = calendarYear === parseMonthValue(basicInfo.currentMonth).year && index === parseMonthValue(basicInfo.currentMonth).month;
+                          const isCurrent = calendarYear === getCurrentYear() && index === getCurrentMonth();
+                          return (
+                            <button key={month} onClick={() => selectMonth(calendarYear, index)} className={`px-3 py-2 text-sm rounded-lg border transition-colors ${isSelected ? 'bg-indigo-600 text-white border-indigo-600' : isCurrent ? 'bg-indigo-50 text-indigo-600 border-indigo-200' : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'}`}>{month}</button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">旅游预算 (RM/年)</label>
+                <input
+                  type="number"
+                  value={basicInfo.yearlyTravel}
+                  onChange={e => setBasicInfo({...basicInfo, yearlyTravel: e.target.value})}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                  placeholder="每年旅游预算 (将自动分摊到学习类)"
+                />
+                <p className="text-sm text-gray-500 mt-1">年预算将除以12计入每月学习类别</p>
+              </div>
+            </div>
+            <div className="mt-8 text-center">
+              <button
+                onClick={() => setActiveTab('details')}
+                disabled={!basicInfo.salary}
+                className="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                下一步 →
+              </button>
+            </div>
+          </div>
+        )}
+        {activeTab === 'details' && (
+          <div className="bg-white rounded-lg shadow p-6">
+            <h2 className="text-xl font-semibold mb-6">财务细节</h2>
+            <div className="mb-4">
+              <button onClick={() => setInputMethod('upload')} className="mr-4 bg-indigo-100 px-4 py-2 rounded">上传账单</button>
+              <button onClick={() => setInputMethod('manual')} className="bg-green-100 px-4 py-2 rounded">手动填入</button>
+            </div>
+            {inputMethod === 'upload' && (
+              <div>
+                <input ref={fileInputRef} type="file" multiple accept=".jpg,.jpeg,.png,.pdf" onChange={handleFileUpload} className="mb-4" />
+                <div>
+                  {uploadedBills.map(bill => (
+                    <div key={bill.id} className="border p-2 mb-2 rounded">
+                      <span>{bill.fileName}</span>
+                      <span className="ml-2 text-xs">{bill.status}</span>
+                      {bill.status === 'error' && <span className="text-red-600 ml-2">{bill.error}</span>}
+                      {bill.status === 'completed' && bill.extractedData && (
+                        <div className="text-xs mt-1">{JSON.stringify(bill.extractedData)}</div>
+                      )}
+                      {bill.status === 'error' && <button className="ml-2 text-xs text-blue-600" onClick={() => retryAnalysis(bill)}>重试</button>}
+                    </div>
+                  ))}
+                </div>
+                <button onClick={() => setActiveTab('analysis')} className="mt-4 bg-green-600 text-white px-6 py-2 rounded">分析账单</button>
+              </div>
+            )}
+            {inputMethod === 'manual' && (
+              <div>
+                <div className="grid grid-cols-2 gap-4 mb-4">
+                  <input type="number" placeholder="餐饮费" value={manualExpenses.food} onChange={e => setManualExpenses({...manualExpenses, food: e.target.value})} className="border p-2 rounded" />
+                  <input type="number" placeholder="娱乐费" value={manualExpenses.entertainment} onChange={e => setManualExpenses({...manualExpenses, entertainment: e.target.value})} className="border p-2 rounded" />
+                  <input type="number" placeholder="购物费" value={manualExpenses.shopping} onChange={e => setManualExpenses({...manualExpenses, shopping: e.target.value})} className="border p-2 rounded" />
+                  <input type="number" placeholder="交通费" value={manualExpenses.transportation} onChange={e => setManualExpenses({...manualExpenses, transportation: e.target.value})} className="border p-2 rounded" />
+                  <input type="number" placeholder="水电费" value={manualExpenses.utilities} onChange={e => setManualExpenses({...manualExpenses, utilities: e.target.value})} className="border p-2 rounded" />
+                  <input type="number" placeholder="手机费" value={manualExpenses.phone} onChange={e => setManualExpenses({...manualExpenses, phone: e.target.value})} className="border p-2 rounded" />
+                  <input type="number" placeholder="家用" value={manualExpenses.household} onChange={e => setManualExpenses({...manualExpenses, household: e.target.value})} className="border p-2 rounded" />
+                  <input type="number" placeholder="其他开销" value={manualExpenses.others_expense} onChange={e => setManualExpenses({...manualExpenses, others_expense: e.target.value})} className="border p-2 rounded" />
+                </div>
+                <button onClick={analyzeManualExpenses} className="bg-green-600 text-white px-6 py-2 rounded">分析手动数据</button>
+              </div>
+            )}
+          </div>
+        )}
+        {activeTab === 'analysis' && (
+          <div className="bg-white rounded-lg shadow p-6">
+            <h2 className="text-xl font-semibold mb-6">分析结果</h2>
+            {analysisResult ? (
+              <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto max-h-96">{JSON.stringify(analysisResult, null, 2)}</pre>
+            ) : (
+              <div>暂无分析结果</div>
+            )}
+            <button onClick={() => setActiveTab('basic')} className="mt-4 bg-indigo-600 text-white px-6 py-2 rounded">重新开始</button>
+          </div>
+        )}
       </div>
     </div>
   );
