@@ -302,3 +302,5 @@ const ExpenseAnalyzer = () => {
     </div>
   );
 } 
+
+export default ExpenseAnalyzer; 
