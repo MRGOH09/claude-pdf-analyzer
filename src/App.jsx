@@ -274,70 +274,71 @@ const ExpenseAnalyzer = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* 顶部导航 */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <h1 className="text-2xl font-bold text-gray-900">财务账单分析系统</h1>
-          </div>
+      <div className="bg-white shadow-lg border-b sticky top-0 z-30">
+        <div className="max-w-4xl mx-auto px-4 sm:px-8 flex items-center justify-center py-5">
+          <span className="flex items-center gap-3">
+            <Calculator className="h-8 w-8 text-indigo-600" />
+            <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">财务账单分析系统</h1>
+          </span>
         </div>
       </div>
       {/* 主内容区域 */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="max-w-2xl mx-auto px-2 sm:px-6 lg:px-8 py-10">
         {/* 进度指示器 */}
-        <div className="mb-8">
+        <div className="mb-10 sticky top-20 z-20 bg-gray-50/80 backdrop-blur rounded-xl shadow-sm py-4">
           <div className="flex items-center justify-center">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center w-full max-w-xl">
               {/* 步骤1 */}
-              <div className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                  activeTab === 'basic' ? 'bg-indigo-600 text-white' : 
-                  activeTab === 'details' || activeTab === 'analysis' ? 'bg-green-500 text-white' : 
-                  'bg-gray-300 text-gray-600'
+              <div className="flex flex-col items-center flex-1">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold transition-all duration-200 border-2 ${
+                  activeTab === 'basic' ? 'bg-indigo-600 text-white shadow-lg scale-110 border-indigo-600' : 
+                  activeTab === 'details' || activeTab === 'analysis' ? 'bg-green-500 text-white border-green-500' : 
+                  'bg-gray-200 text-gray-600 border-gray-300'
                 }`}>
                   1
                 </div>
-                <span className={`ml-2 text-sm font-medium ${
+                <span className={`mt-2 text-base font-semibold ${
                   activeTab === 'basic' ? 'text-indigo-600' : 
                   activeTab === 'details' || activeTab === 'analysis' ? 'text-green-600' : 
-                  'text-gray-500'
+                  'text-gray-400'
                 }`}>
                   基本信息
                 </span>
               </div>
               {/* 连接线 */}
-              <div className={`w-16 h-1 ${
-                activeTab === 'details' || activeTab === 'analysis' ? 'bg-green-500' : 'bg-gray-300'
+              <div className={`h-1 flex-1 mx-2 rounded-full ${
+                activeTab === 'details' || activeTab === 'analysis' ? 'bg-green-400' : 'bg-gray-200'
               }`}></div>
               {/* 步骤2 */}
-              <div className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                  activeTab === 'details' ? 'bg-indigo-600 text-white' : 
-                  activeTab === 'analysis' ? 'bg-green-500 text-white' : 
-                  'bg-gray-300 text-gray-600'
+              <div className="flex flex-col items-center flex-1">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold transition-all duration-200 border-2 ${
+                  activeTab === 'details' ? 'bg-indigo-600 text-white shadow-lg scale-110 border-indigo-600' : 
+                  activeTab === 'analysis' ? 'bg-green-500 text-white border-green-500' : 
+                  'bg-gray-200 text-gray-600 border-gray-300'
                 }`}>
                   2
                 </div>
-                <span className={`ml-2 text-sm font-medium ${
+                <span className={`mt-2 text-base font-semibold ${
                   activeTab === 'details' ? 'text-indigo-600' : 
                   activeTab === 'analysis' ? 'text-green-600' : 
-                  'text-gray-500'
+                  'text-gray-400'
                 }`}>
                   财务细节
                 </span>
               </div>
               {/* 连接线 */}
-              <div className={`w-16 h-1 ${
-                activeTab === 'analysis' ? 'bg-green-500' : 'bg-gray-300'
+              <div className={`h-1 flex-1 mx-2 rounded-full ${
+                activeTab === 'analysis' ? 'bg-green-400' : 'bg-gray-200'
               }`}></div>
               {/* 步骤3 */}
-              <div className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                  activeTab === 'analysis' ? 'bg-indigo-600 text-white' : 'bg-gray-300 text-gray-600'
+              <div className="flex flex-col items-center flex-1">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-lg font-bold transition-all duration-200 border-2 ${
+                  activeTab === 'analysis' ? 'bg-indigo-600 text-white shadow-lg scale-110 border-indigo-600' : 'bg-gray-200 text-gray-600 border-gray-300'
                 }`}>
                   3
                 </div>
-                <span className={`ml-2 text-sm font-medium ${
-                  activeTab === 'analysis' ? 'text-indigo-600' : 'text-gray-500'
+                <span className={`mt-2 text-base font-semibold ${
+                  activeTab === 'analysis' ? 'text-indigo-600' : 'text-gray-400'
                 }`}>
                   分析结果
                 </span>
@@ -345,27 +346,27 @@ const ExpenseAnalyzer = () => {
             </div>
           </div>
         </div>
-        {/* 主内容区 */}
+        {/* 主内容区优化 ... 其余内容区、表单、上传、分析结果等全部加大圆角、间距、卡片化、按钮美化、输入框美化、hover、空态、错误提示等 ... */}
         {activeTab === 'basic' && (
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold mb-6">基本财务信息</h2>
+          <div className="bg-white rounded-2xl shadow-lg p-8">
+            <h2 className="text-2xl font-bold mb-6">基本财务信息</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">月薪 (RM)</label>
+                <label className="block text-lg font-medium text-gray-700 mb-2">月薪 (RM)</label>
                 <input
                   type="number"
                   value={basicInfo.salary}
                   onChange={e => setBasicInfo({...basicInfo, salary: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500"
                   placeholder="请输入每月薪水"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">分析月份</label>
+                <label className="block text-lg font-medium text-gray-700 mb-2">分析月份</label>
                 <div className="relative calendar-container">
                   <button
                     onClick={() => setShowCalendar(!showCalendar)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 text-left flex items-center justify-between bg-white hover:bg-gray-50"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 text-left flex items-center justify-between bg-white hover:bg-gray-50"
                   >
                     <span className="flex items-center">
                       <Calendar className="h-5 w-5 text-gray-400 mr-2" />
@@ -418,12 +419,12 @@ const ExpenseAnalyzer = () => {
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">旅游预算 (RM/年)</label>
+                <label className="block text-lg font-medium text-gray-700 mb-2">旅游预算 (RM/年)</label>
                 <input
                   type="number"
                   value={basicInfo.yearlyTravel}
                   onChange={e => setBasicInfo({...basicInfo, yearlyTravel: e.target.value})}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500"
                   placeholder="每年旅游预算 (将自动分摊到学习类)"
                 />
                 <p className="text-sm text-gray-500 mt-1">年预算将除以12计入每月学习类别</p>
@@ -433,7 +434,7 @@ const ExpenseAnalyzer = () => {
               <button
                 onClick={() => setActiveTab('details')}
                 disabled={!basicInfo.salary}
-                className="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="bg-indigo-600 text-white px-8 py-3 rounded-xl hover:bg-indigo-700 transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 下一步 →
               </button>
@@ -441,57 +442,57 @@ const ExpenseAnalyzer = () => {
           </div>
         )}
         {activeTab === 'details' && (
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold mb-6">财务细节</h2>
+          <div className="bg-white rounded-2xl shadow-lg p-8">
+            <h2 className="text-2xl font-bold mb-6">财务细节</h2>
             <div className="mb-4">
-              <button onClick={() => setInputMethod('upload')} className="mr-4 bg-indigo-100 px-4 py-2 rounded">上传账单</button>
-              <button onClick={() => setInputMethod('manual')} className="bg-green-100 px-4 py-2 rounded">手动填入</button>
+              <button onClick={() => setInputMethod('upload')} className="mr-4 bg-indigo-100 px-4 py-2 rounded-lg hover:bg-indigo-200 transition-colors">上传账单</button>
+              <button onClick={() => setInputMethod('manual')} className="bg-green-100 px-4 py-2 rounded-lg hover:bg-green-200 transition-colors">手动填入</button>
             </div>
             {inputMethod === 'upload' && (
               <div>
                 <input ref={fileInputRef} type="file" multiple accept=".jpg,.jpeg,.png,.pdf" onChange={handleFileUpload} className="mb-4" />
                 <div>
                   {uploadedBills.map(bill => (
-                    <div key={bill.id} className="border p-2 mb-2 rounded">
-                      <span>{bill.fileName}</span>
-                      <span className="ml-2 text-xs">{bill.status}</span>
-                      {bill.status === 'error' && <span className="text-red-600 ml-2">{bill.error}</span>}
+                    <div key={bill.id} className="border p-2 mb-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
+                      <span className="text-base font-medium">{bill.fileName}</span>
+                      <span className="ml-2 text-xs text-gray-600">{bill.status}</span>
+                      {bill.status === 'error' && <span className="text-red-600 ml-2 text-sm">{bill.error}</span>}
                       {bill.status === 'completed' && bill.extractedData && (
-                        <div className="text-xs mt-1">{JSON.stringify(bill.extractedData)}</div>
+                        <div className="text-xs mt-1 text-gray-700">{JSON.stringify(bill.extractedData)}</div>
                       )}
-                      {bill.status === 'error' && <button className="ml-2 text-xs text-blue-600" onClick={() => retryAnalysis(bill)}>重试</button>}
+                      {bill.status === 'error' && <button className="ml-2 text-xs text-blue-600 hover:underline" onClick={() => retryAnalysis(bill)}>重试</button>}
                     </div>
                   ))}
                 </div>
-                <button onClick={() => setActiveTab('analysis')} className="mt-4 bg-green-600 text-white px-6 py-2 rounded">分析账单</button>
+                <button onClick={() => setActiveTab('analysis')} className="mt-4 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">分析账单</button>
               </div>
             )}
             {inputMethod === 'manual' && (
               <div>
                 <div className="grid grid-cols-2 gap-4 mb-4">
-                  <input type="number" placeholder="餐饮费" value={manualExpenses.food} onChange={e => setManualExpenses({...manualExpenses, food: e.target.value})} className="border p-2 rounded" />
-                  <input type="number" placeholder="娱乐费" value={manualExpenses.entertainment} onChange={e => setManualExpenses({...manualExpenses, entertainment: e.target.value})} className="border p-2 rounded" />
-                  <input type="number" placeholder="购物费" value={manualExpenses.shopping} onChange={e => setManualExpenses({...manualExpenses, shopping: e.target.value})} className="border p-2 rounded" />
-                  <input type="number" placeholder="交通费" value={manualExpenses.transportation} onChange={e => setManualExpenses({...manualExpenses, transportation: e.target.value})} className="border p-2 rounded" />
-                  <input type="number" placeholder="水电费" value={manualExpenses.utilities} onChange={e => setManualExpenses({...manualExpenses, utilities: e.target.value})} className="border p-2 rounded" />
-                  <input type="number" placeholder="手机费" value={manualExpenses.phone} onChange={e => setManualExpenses({...manualExpenses, phone: e.target.value})} className="border p-2 rounded" />
-                  <input type="number" placeholder="家用" value={manualExpenses.household} onChange={e => setManualExpenses({...manualExpenses, household: e.target.value})} className="border p-2 rounded" />
-                  <input type="number" placeholder="其他开销" value={manualExpenses.others_expense} onChange={e => setManualExpenses({...manualExpenses, others_expense: e.target.value})} className="border p-2 rounded" />
+                  <input type="number" placeholder="餐饮费" value={manualExpenses.food} onChange={e => setManualExpenses({...manualExpenses, food: e.target.value})} className="border p-2 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+                  <input type="number" placeholder="娱乐费" value={manualExpenses.entertainment} onChange={e => setManualExpenses({...manualExpenses, entertainment: e.target.value})} className="border p-2 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+                  <input type="number" placeholder="购物费" value={manualExpenses.shopping} onChange={e => setManualExpenses({...manualExpenses, shopping: e.target.value})} className="border p-2 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+                  <input type="number" placeholder="交通费" value={manualExpenses.transportation} onChange={e => setManualExpenses({...manualExpenses, transportation: e.target.value})} className="border p-2 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+                  <input type="number" placeholder="水电费" value={manualExpenses.utilities} onChange={e => setManualExpenses({...manualExpenses, utilities: e.target.value})} className="border p-2 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+                  <input type="number" placeholder="手机费" value={manualExpenses.phone} onChange={e => setManualExpenses({...manualExpenses, phone: e.target.value})} className="border p-2 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+                  <input type="number" placeholder="家用" value={manualExpenses.household} onChange={e => setManualExpenses({...manualExpenses, household: e.target.value})} className="border p-2 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+                  <input type="number" placeholder="其他开销" value={manualExpenses.others_expense} onChange={e => setManualExpenses({...manualExpenses, others_expense: e.target.value})} className="border p-2 rounded-lg focus:ring-2 focus:ring-indigo-500" />
                 </div>
-                <button onClick={analyzeManualExpenses} className="bg-green-600 text-white px-6 py-2 rounded">分析手动数据</button>
+                <button onClick={analyzeManualExpenses} className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors">分析手动数据</button>
               </div>
             )}
           </div>
         )}
         {activeTab === 'analysis' && (
-          <div className="bg-white rounded-lg shadow p-6">
-            <h2 className="text-xl font-semibold mb-6">分析结果</h2>
+          <div className="bg-white rounded-2xl shadow-lg p-8">
+            <h2 className="text-2xl font-bold mb-6">分析结果</h2>
             {analysisResult ? (
-              <pre className="bg-gray-100 p-3 rounded text-sm overflow-x-auto max-h-96">{JSON.stringify(analysisResult, null, 2)}</pre>
+              <pre className="bg-gray-100 p-3 rounded-lg text-sm overflow-x-auto max-h-96 text-gray-800">{JSON.stringify(analysisResult, null, 2)}</pre>
             ) : (
-              <div>暂无分析结果</div>
+              <div className="text-center py-10 text-gray-500">暂无分析结果</div>
             )}
-            <button onClick={() => setActiveTab('basic')} className="mt-4 bg-indigo-600 text-white px-6 py-2 rounded">重新开始</button>
+            <button onClick={() => setActiveTab('basic')} className="mt-4 bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-colors">重新开始</button>
           </div>
         )}
       </div>
